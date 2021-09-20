@@ -1,24 +1,41 @@
 import sys
 from src.graph import Graph
+from src.search import Search
 
-# Recuperando nome do arquivo passado no parâmetro
-file = open(sys.argv[1])
-graph = Graph()
+def main():
+    currentFile, graphFile, start, goal = sys.argv
 
-# Primeira linha de configuração do nó
-graphConfig = file.readline().split(' ')
-amountNods = graphConfig[0]
+    # Recuperando nome do arquivo passado no parâmetro
+    file = open(graphFile)
+    graph = Graph()
 
-nodeList = []
+    # Primeira linha de configuração do nó
+    graphConfig = file.readline().split(' ')
+    amountNods = graphConfig[0]
 
-for line in file:
-    line = line.replace('\n', '')
-    nodeData = line.split(' ')
+    nodeList = []
 
-    # Adicionando nó ao grafo
-    graph.addNode(nodeData[0])
+    for line in file:
+        line = line.replace('\n', '')
+        nodeData = line.split(' ')
 
-    # Adicionando conexão do respectivo nó
-    graph.addEdge(nodeData[0], nodeData[1], nodeData[2])
+        # Adicionando nó ao grafo
+        graph.addNode(nodeData[0])
 
-file.close()
+        # Adicionando conexão do respectivo nó
+        graph.addEdge(nodeData[0], nodeData[1], nodeData[2])
+
+    path, cost = Search.ucs(graph, start, goal)
+
+    result = ''
+
+    for node in path:
+        result += node + ' -> '
+
+    result += 'Custo: ' + str(cost)
+
+    print(result)
+
+    file.close()
+
+main()

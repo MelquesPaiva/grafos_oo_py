@@ -26,6 +26,9 @@ def main():
         graph.addEdge(nodeData[0], nodeData[1], nodeData[2])
 
     path, cost = Search.ucs(graph, start, goal)
+    if path == None or cost == None:
+        print('Caminho inexistente')
+        return
 
     result = ''
 

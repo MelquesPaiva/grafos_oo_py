@@ -18,3 +18,4 @@ class Search:
                     if nodeConn not in visited:
                         q.put((cost + int(conn['weight']), nodeConn, path + [str(nodeConn)]))
 
+        return None, None
